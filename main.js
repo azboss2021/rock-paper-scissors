@@ -1,44 +1,129 @@
+let userScore = 0;
+let computerScore = 0;
+let gameOver = false;
+const rock_div = document.getElementById("r");
+const paper_div = document.getElementById("p");
+const scissors_div = document.getElementById("s");
+const content_div = document.querySelector(".content");
+const score_div = document.createElement("div");
+const userScore_div = document.createElement("div");
+const computerScore_div = document.createElement("div");;
+const result_div = document.createElement("div");;
+const retry_button = document.createElement("button");;
+
 function computerPlay () {
     let choice = Math.floor(Math.random() * 3);
     if(choice === 0){
-        choice = "Rock";
+        choice = "r";
     } else if (choice === 1){
-        choice = "Paper";
+        choice = "p";
     } else if (choice === 2){
-        choice = "Scissors";
+        choice = "s";
     }
     return choice;
 }
 
-function playRound (playerSelection, computerSelection) {
-    let finalPrompt;
-    if(playerSelection==="rock" && computerSelection==="scissors"
-    || playerSelection==="paper" && computerSelection==="rock"
-    || playerSelection==="scissors" && computerSelection==="paper"){
-        finalPrompt = `You Win! ${playerSelection} beats ${computerSelection}`;
-    } else if(playerSelection==="scissors" && computerSelection==="rock"
-    || playerSelection==="rock" && computerSelection==="paper"
-    || playerSelection==="paper" && computerSelection==="scissors"){
-        finalPrompt = `You Lose! ${computerSelection} beats ${playerSelection}`;
-    } else finalPrompt = `It's a Draw! ${playerSelection} cannot beat ${computerSelection}`;
-    return finalPrompt;
+function showElements() {
+    score_div.appendChild(userScore_div);
+    score_div.appendChild(computerScore_div);
+    content_div.appendChild(score_div);
+    content_div.appendChild(result_div);
+    userScore_div.textContent ="User Score: " + userScore;
+    computerScore_div.textContent ="Computer Score: " + computerScore;
+    score_div.classList.add("scoreContent");
+    userScore_div.classList.add("score");
+    computerScore_div.classList.add("score");
+    result_div.classList.add("result");
 }
 
-function game () {
-    let score = 0;
-    for(let i=0;i<5;i++){
-        let playerChoice = prompt("Enter Rock, Paper, or Scissors: ").toLowerCase();
-        let computerChoice = computerPlay().toLowerCase();
-        if(playRound(playerChoice,computerChoice).includes("Win")){
-            score++;
+function updateScore () {
+    userScore_div.textContent="User Score: " + userScore;
+    computerScore_div.textContent="Computer Score: " + computerScore;
+}
+
+function restart() {
+    userScore = 0;
+    computerScore = 0;
+    updateScore();
+    gameOver=false;
+}
+
+function win() {
+    result_div.textContent = "You won " + userScore + " to " + computerScore + "!!!";
+    gameOver = true;
+    retry_button.classList.add("item");
+    retry_button.textContent = "Retry?";
+    content_div.appendChild(retry_button);
+    retry_button.addEventListener('click', () => restart());
+}
+
+function lose() {
+    result_div.textContent = "You lost " + userScore + " to " + computerScore + "...";
+    gameOver = true;
+    retry_button.classList.add("item");
+    retry_button.textContent = "Retry?";
+    content_div.appendChild(retry_button);
+    retry_button.addEventListener('click', () => restart());
+}
+
+function endRound (result, endResult) {
+    if(userScore===0){
+        showElements();
+    }
+    if(result==="w"){
+        userScore++;
+        updateScore();
+        result_div.textContent=endResult;
+    } else if(result==="l"){
+        computerScore++;
+        updateScore();
+        result_div.textContent=endResult;
+    } else if(result==="d"){
+        result_div.textContent=endResult;
+    }
+
+    if(userScore>=5){
+        win();
+    } else if(computerScore>=5){
+        lose();
+    }
+}
+
+function game (userChoice) {
+    const computerChoice = computerPlay();
+    let endResult = userChoice+computerChoice
+    if(!gameOver){
+        switch(endResult) {
+            case "rs":
+                endResult="Rock beats Scissors!"
+            case "pr":
+                endResult="Paper beats Rock!"
+            case "sp":
+                endResult="Scissors beats Paper!"
+                endRound("w", endResult);
+                break;
+            case "rp":
+                endResult="Rock Lost to Paper!"
+            case "ps":
+                endResult="Paper Lost to Scissors!"
+            case "sr":
+                endResult="Scissors Lost to Rock!"
+                endRound("l", endResult);
+                break;
+            case "rr":
+            case "pp":
+            case "ss":
+                endResult="It's a Draw!"
+                endRound("d", endResult);
+                break;
         }
-        console.log(playRound(playerChoice, computerChoice));    
-    }
-    if(score >= 3){
-        console.log("YOU WIN!");
-    } else {
-        console.log("YOU LOST!");
     }
 }
 
-game();
+function main () {
+    rock_div.addEventListener('click', () => game("r"));
+    paper_div.addEventListener('click', () => game("p"));
+    scissors_div.addEventListener('click', () => game("s"));
+}
+
+main();
