@@ -1,4 +1,4 @@
-# rock_paper_scissors_TOP
+# Rock Paper Scissors
 The Odin Project rock paper scissors.
 
 Learned basic Javascript, HTML and CSS. Have fun.
