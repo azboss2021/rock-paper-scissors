@@ -1,4 +1,6 @@
 # rock_paper_scissors_TOP
-odin project rock paper scissors assignment
+The Odin Project rock paper scissors.
 
-have some fun
+Learned basic Javascript, HTML and CSS. Have fun.
+
+Live: https://azboss2021.github.io/rock-paper-scissors/
