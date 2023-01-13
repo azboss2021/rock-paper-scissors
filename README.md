@@ -1,6 +1,23 @@
-# Rock Paper Scissors
-The Odin Project rock paper scissors.
+# Rock-Paper-Scissors Project
 
-Learned basic Javascript, HTML and CSS. Have fun.
+## A basic Rock-Paper-Scissors app that lets you play against a simple AI.
 
-Live: https://azboss2021.github.io/rock-paper-scissors/
+This project was built while following [The Odin Project](https://www.theodinproject.com/) curriculum. The app is fully functional. Try out the demo below.
+
+➡️ [LIVE DEMO](https://azboss2021.github.io/rock-paper-scissors/)
+
+## What I used/learned:
+
+* basic CSS
+* basic Javascript
+* Switch Statements
+* DOM Manipulation/Interactibility
+
+## Screenshot Preview
+
+![screenshot](./screenshot_rock-paper-scissors.png?raw=true)
+
+## What could be improved
+
+* CSS animations
+* Images for choices
